@@ -1,4 +1,8 @@
-﻿using FlexWallet.Abstractions.Services.Business;
+﻿using AutoMapper;
+using FlexWallet.Abstractions.Helpers;
+using FlexWallet.Abstractions.Models;
+using FlexWallet.Abstractions.Models.Dtos;
+using FlexWallet.Abstractions.Services.Business;
 using FlexWallet.Abstractions.Services.Data;
 using System;
 using System.Collections.Generic;
@@ -11,10 +15,18 @@ namespace FlexWallet.Data.Service
     public class AccountService : IAccountService
     {
         private readonly IAccountDataService accountDataService;
+        private readonly IMapper _mapper;
 
-        public AccountService(IAccountDataService accountDataService)
+        public AccountService(IAccountDataService accountDataService, IMapper mapper)
         {
             this.accountDataService = accountDataService ?? throw new ArgumentNullException(nameof(accountDataService));
+            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+        }
+
+        public async Task<StatusMessage> WalletRegistration(WalletUserDto walletUserDto)
+        {
+            var walletUser = _mapper.Map<WalletUserDto, WalletUser>(walletUserDto);
+            throw new NotImplementedException();
         }
     }
 }

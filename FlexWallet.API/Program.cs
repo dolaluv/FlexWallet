@@ -1,8 +1,10 @@
+using AutoMapper;
 using FlexWallet.Abstractions.Helper;
 using FlexWallet.Abstractions.Services.Business;
 using FlexWallet.Abstractions.Services.Data;
 using FlexWallet.Data.Mock;
 using FlexWallet.Data.Service;
+using FlexWallet.Mapper;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,8 +26,8 @@ var appSettingsSection = getSection.GetSection("AppSettings");
 var appSettings = appSettingsSection.Get<AppSettings>();
 
 
-//IMapper mapper = MapConfig.RegristerMapper().CreateMapper();
-//builder.Services.AddSingleton(mapper);
+IMapper mapper = MapConfig.RegristerMapper().CreateMapper();
+builder.Services.AddSingleton(mapper);
 
 if (appSettings.UseMock)
 {
