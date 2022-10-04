@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FlexWallet.Abstractions.Services.Data
 {
-    internal interface IWalletTransactionDataService
+    public interface IWalletTransactionDataService
     {
     }
 }
