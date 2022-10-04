@@ -5,6 +5,8 @@ VisualStudioVersion = 17.3.32901.215
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlexWallet.API", "FlexWallet.API\FlexWallet.API.csproj", "{8039A600-7F3A-41CB-B63E-FE2E0D1DD9DB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlexWallet.Abstractions", "FlexWallet.Abstractions\FlexWallet.Abstractions.csproj", "{9867C9B9-353A-4A9A-8F06-DA9047BD058A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{8039A600-7F3A-41CB-B63E-FE2E0D1DD9DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8039A600-7F3A-41CB-B63E-FE2E0D1DD9DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8039A600-7F3A-41CB-B63E-FE2E0D1DD9DB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9867C9B9-353A-4A9A-8F06-DA9047BD058A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9867C9B9-353A-4A9A-8F06-DA9047BD058A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9867C9B9-353A-4A9A-8F06-DA9047BD058A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9867C9B9-353A-4A9A-8F06-DA9047BD058A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
