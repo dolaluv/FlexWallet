@@ -10,4 +10,11 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\FlexWallet.Abstractions\FlexWallet.Abstractions.csproj" />
+    <ProjectReference Include="..\FlexWallet.Data.Mock\FlexWallet.Data.Mock.csproj" />
+    <ProjectReference Include="..\FlexWallet.Data.Service\FlexWallet.Data.Service.csproj" />
+    <ProjectReference Include="..\FlexWallet.Service\FlexWallet.Service.csproj" />
+  </ItemGroup>
+
 </Project>
