@@ -4,7 +4,9 @@ using FlexWallet.Abstractions.Services.Business;
 using FlexWallet.Abstractions.Services.Data;
 using FlexWallet.Data.Mock;
 using FlexWallet.Data.Service;
+using FlexWallet.Data.Service.Data;
 using FlexWallet.Mapper;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +16,12 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+
+});
 
 
 
