@@ -1,4 +1,6 @@
-﻿using FlexWallet.Abstractions.Services.Data;
+﻿using FlexWallet.Abstractions.Helpers;
+using FlexWallet.Abstractions.Models;
+using FlexWallet.Abstractions.Services.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,5 +11,9 @@ namespace FlexWallet.Data.Mock
 {
     public class MockAccountDataService : IAccountDataService
     {
+        public Task<StatusMessage> WalletRegistration(WalletUser walletUser)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

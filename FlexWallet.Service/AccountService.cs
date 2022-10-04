@@ -26,7 +26,7 @@ namespace FlexWallet.Data.Service
         public async Task<StatusMessage> WalletRegistration(WalletUserDto walletUserDto)
         {
             var walletUser = _mapper.Map<WalletUserDto, WalletUser>(walletUserDto);
-            throw new NotImplementedException();
+            return await this.accountDataService.WalletRegistration(walletUser);
         }
     }
 }
