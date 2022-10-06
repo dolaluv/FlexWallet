@@ -17,7 +17,7 @@ namespace FlexWallet.Mapper
 
             var mapConfig = new MapperConfiguration(config =>
             {
-                config.CreateMap<WalletUserDto, WalletUser>().ReverseMap();
+                config.CreateMap<WalletUserRegister, WalletUser>().ReverseMap();
                
 
             });

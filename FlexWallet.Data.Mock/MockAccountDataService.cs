@@ -1,5 +1,6 @@
 ﻿using FlexWallet.Abstractions.Helpers;
 using FlexWallet.Abstractions.Models;
+using FlexWallet.Abstractions.Models.Dtos;
 using FlexWallet.Abstractions.Services.Data;
 using FlexWallet.Data.Mock.Helper;
 using Microsoft.VisualBasic;
@@ -13,6 +14,13 @@ namespace FlexWallet.Data.Mock
 {
     public class MockAccountDataService : IAccountDataService
     {
+        public Task<StatusMessage> WalletAuthenticateLoginUser(WalletUserLogin walletUserLogin)
+        {
+            var results = ResourceHelper.GetObject<List<WalletUser>>("WalletUsers.json", Constants.MockDataNamespace);
+           var CheckUser = results.FirstOrDefault(f => f.Email == walletUserLogin.Email && f.Password == walletUserLogin.Password);
+            return Task.FromResult(new StatusMessage());
+        }
+
         public Task<StatusMessage> WalletRegistration(WalletUser walletUser)
         {
             try

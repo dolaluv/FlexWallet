@@ -10,6 +10,7 @@ namespace FlexWallet.Abstractions.Services.Business
 {
     public interface IAccountService
     {
-        Task<StatusMessage> WalletRegistration (WalletUserDto walletUserDto);
+        Task<StatusMessage> WalletRegistration (WalletUserRegister walletUserRegister);
+        Task<StatusMessage> WalletLogin(WalletUserLogin walletUserLogin );
     }
 }

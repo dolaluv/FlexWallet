@@ -23,9 +23,14 @@ namespace FlexWallet.Data.Service
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
-        public async Task<StatusMessage> WalletRegistration(WalletUserDto walletUserDto)
+        public async Task<StatusMessage> WalletLogin(WalletUserLogin walletUserLogin)
         {
-            var walletUser = _mapper.Map<WalletUserDto, WalletUser>(walletUserDto);
+            return await this.accountDataService.WalletAuthenticateLoginUser(walletUserLogin);
+        }
+
+        public async Task<StatusMessage> WalletRegistration(WalletUserRegister walletUserRegister)
+        {
+            var walletUser = _mapper.Map<WalletUserRegister, WalletUser>(walletUserRegister);
             return await this.accountDataService.WalletRegistration(walletUser);
         }
     }

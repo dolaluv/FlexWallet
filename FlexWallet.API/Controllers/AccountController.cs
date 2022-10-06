@@ -19,7 +19,7 @@ namespace FlexWallet.API.Controllers
 
         [HttpPost("Register")]
         [ProducesResponseType(typeof(ResponseModel), 200)]
-        public async Task<IActionResult> SignUp([FromBody] WalletUserDto walletUserDtos)
+        public async Task<IActionResult> SignUp([FromBody] WalletUserRegister walletUserDtos)
         {
             try
             {
@@ -28,6 +28,35 @@ namespace FlexWallet.API.Controllers
                     var result = await this.accountService.WalletRegistration(walletUserDtos);
                     if (result != null && result.Status)
                         return Ok(StandardResponse.Ok(" Added Successfully", result));
+                    else if (!result.Status)
+                        return Ok(StandardResponse.Ok("Failed", result));
+                    else
+                        return BadRequest(StandardResponse.BadRequest("An error occured"));
+                }
+                catch (Exception ex)
+                {
+                    return StatusCode(500, StandardResponse.InternalServerError(ex.ToString(), null));
+                }
+
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, StandardResponse.InternalServerError(ex.ToString(), null));
+            }
+
+        }
+
+        [HttpPost("Login")]
+        [ProducesResponseType(typeof(ResponseModel), 200)]
+        public async Task<IActionResult> Login([FromBody] WalletUserLogin walletUserLogin)
+        {
+            try
+            {
+                try
+                {
+                    var result = await this.accountService.WalletLogin(walletUserLogin);
+                    if (result != null && result.Status)
+                        return Ok(StandardResponse.Ok("Success", result));
                     else if (!result.Status)
                         return Ok(StandardResponse.Ok("Failed", result));
                     else
