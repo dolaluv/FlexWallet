@@ -1,4 +1,5 @@
-﻿using FlexWallet.Abstractions.Helpers;
+﻿using FlexWallet.Abstractions.Helper;
+using FlexWallet.Abstractions.Helpers;
 using FlexWallet.Abstractions.Models;
 using FlexWallet.Abstractions.Models.Dtos;
 using FlexWallet.Abstractions.Services.Data;
@@ -15,10 +16,13 @@ namespace FlexWallet.Data.Service
     public class AccountDataService : IAccountDataService
     {
         private readonly ApplicationDbContext _db;
+        public AppSettings appSettings;
         StatusMessage statusMessage = new();
-        public AccountDataService(ApplicationDbContext db)
+
+        public AccountDataService(ApplicationDbContext db, AppSettings appSettings)
         {
             _db = db ?? throw new ArgumentNullException(nameof(db));
+            this.appSettings = appSettings ?? throw new ArgumentNullException(nameof(appSettings));
         }
 
         public async Task<StatusMessage> WalletAuthenticateLoginUser(WalletUserLogin walletUserLogin)
@@ -50,10 +54,10 @@ namespace FlexWallet.Data.Service
                     WalletUserAccount walletUserAccount = new WalletUserAccount
                     {
                         WalletAccountNumber = GetAccount,
-                        WalletAccountBalance = 5000,
-                        WalletAccountOpeningBalance = 5000,
-                        WalletAccountTotalSavedFunds = 5000,
-                        WalletAccountTotalWithdrawFunds = 5000,
+                        WalletAccountBalance = appSettings.DefaultFund,
+                        WalletAccountOpeningBalance = appSettings.DefaultFund,
+                        WalletAccountTotalSavedFunds = appSettings.DefaultFund,
+                        WalletAccountTotalWithdrawFunds = appSettings.DefaultFund,
                         WalletUserId = CreateWalleUser.Entity.Id,
                         CreatedBy = ""
                     };

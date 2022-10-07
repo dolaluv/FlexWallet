@@ -28,10 +28,9 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
 builder.Services.AddScoped<IWalletTransactionService, WalletTransactionService>(); 
 builder.Services.AddScoped<IAccountService, AccountService>();
-
-var getSection = builder.Configuration;
-var appSettingsSection = getSection.GetSection("AppSettings");
-var appSettings = appSettingsSection.Get<AppSettings>();
+ 
+AppSettings appSettings = builder.Configuration.GetSection("AppSettings").Get<AppSettings>();
+builder.Services.AddSingleton(appSettings);
 
 
 IMapper mapper = MapConfig.RegristerMapper().CreateMapper();

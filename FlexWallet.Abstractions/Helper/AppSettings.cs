@@ -9,5 +9,6 @@ namespace FlexWallet.Abstractions.Helper
     public class AppSettings
     {
         public bool UseMock { get; set; }
+        public double DefaultFund { get; set; }
     }
 }
