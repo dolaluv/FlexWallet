@@ -50,10 +50,10 @@ namespace FlexWallet.Data.Service
                     WalletUserAccount walletUserAccount = new WalletUserAccount
                     {
                         WalletAccountNumber = GetAccount,
-                        WalletAccountBalance = 1000,
-                        WalletAccountOpeningBalance = 1000,
-                        WalletAccountTotalSavedFunds = 1000,
-                        WalletAccountTotalWithdrawFunds = 1000,
+                        WalletAccountBalance = 5000,
+                        WalletAccountOpeningBalance = 5000,
+                        WalletAccountTotalSavedFunds = 5000,
+                        WalletAccountTotalWithdrawFunds = 5000,
                         WalletUserId = CreateWalleUser.Entity.Id,
                         CreatedBy = ""
                     };
