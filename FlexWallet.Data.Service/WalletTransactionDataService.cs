@@ -62,11 +62,13 @@ namespace FlexWallet.Data.Service
             var DebitAccount = await GetWalletAccountBalance(DebitAccountNumber);
             DebitAccount.WalletAccountBalance = DebitAccount.WalletAccountBalance - Amount;
             DebitAccount.WalletAccountBalance = DebitAccount.WalletAccountTotalWithdrawFunds + Amount;
+            DebitAccount.LastUpdatedDate = DateTime.Now;
             _db.WalletUserAccounts.Update(DebitAccount);
 
             var AccounCreditted = await GetWalletAccountBalance(CreditAccountNumber);
             AccounCreditted.WalletAccountBalance = AccounCreditted.WalletAccountBalance + Amount;
             AccounCreditted.WalletAccountBalance = AccounCreditted.WalletAccountTotalSavedFunds + Amount;
+            DebitAccount.LastUpdatedDate = DateTime.Now;
             _db.WalletUserAccounts.Update(AccounCreditted);
 
            await _db.SaveChangesAsync();
