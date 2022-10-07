@@ -18,7 +18,7 @@ namespace FlexWallet.API.Controllers
         }
 
         [HttpPost("Register")]
-        [ProducesResponseType(typeof(ResponseModel), 200)]
+        [ProducesResponseType(typeof(ResponseModel), 200)] 
         public async Task<IActionResult> SignUp([FromBody] WalletUserRegister walletUserDtos)
         {
             try
