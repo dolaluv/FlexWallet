@@ -28,14 +28,14 @@ namespace FlexWallet.Data.Service
         {
             var getAccountBalance = await GetAccountBalance(walletFundTransferDto.AccountmNumber);
 
-            if(getAccountBalance.AccountBalance < walletFundTransferDto.TransactionAmount)
+            if(getAccountBalance == null || getAccountBalance?.AccountBalance < walletFundTransferDto?.TransactionAmount )
             {
 
 
                 return new StatusMessage
                 {
                     Status= false,
-                    Message = $"insufficient funds"
+                    Message = getAccountBalance != null? $"insufficient funds" : "Un able to verify accoun Number"
                 };
             }
             var walletFundTransaction = _mapper.Map<WalletFundTransferDto, WalletFundTransaction>(walletFundTransferDto);
@@ -45,6 +45,8 @@ namespace FlexWallet.Data.Service
         public async Task<WalletUserAccountDto> GetAccountBalance(string WallectAccountNumber)
         {
            var walletAccount =   await this.walletTransactionDataService.GetWalletAccountBalance(WallectAccountNumber);
+            if (walletAccount == null)
+                return null;
             return new WalletUserAccountDto
             {
                 AccountName =  $"{walletAccount?.walletUser?.FirstName}  {walletAccount?.walletUser?.FirstName}",
