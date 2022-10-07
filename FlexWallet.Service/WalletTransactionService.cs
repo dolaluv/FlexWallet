@@ -32,8 +32,14 @@ namespace FlexWallet.Data.Service
 
         public async Task<WalletUserAccountDto> GetAccountBalance(string WallectAccountNumber)
         {
-             await this.walletTransactionDataService.GetWalletAccountBalance(WallectAccountNumber);
-            return new WalletUserAccountDto();
+           var walletAccount =   await this.walletTransactionDataService.GetWalletAccountBalance(WallectAccountNumber);
+            return new WalletUserAccountDto
+            {
+                AccountName =  $"{walletAccount?.walletUser?.FirstName}  {walletAccount?.walletUser?.FirstName}",
+                AccountNumber = WallectAccountNumber,
+                AccountBalance = walletAccount.WalletAccountBalance
+
+            };
         }
     }
 }

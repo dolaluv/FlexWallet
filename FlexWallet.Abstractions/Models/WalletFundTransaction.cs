@@ -18,7 +18,7 @@ namespace FlexWallet.Abstractions.Models
         public string TransactionBankName { get; set; }
         public string TransactionStatus { get; set; }
         public string CreatedBy { get; set; }
-        public DateTime TransactionDate { get; set; }
+        public DateTime TransactionDate { get; set; } = DateTime.Now;
         [ForeignKey("WalletUserAccount")]
         public int WalletUserAccountId { get; set; }
         public WalletUserAccount wallet { get; set; }

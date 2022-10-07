@@ -8,5 +8,8 @@ namespace FlexWallet.Abstractions.Models.Dtos
 {
     public class WalletUserAccountDto
     {
+        public string AccountName { get; set; }
+        public string AccountNumber { get; set; }
+        public double AccountBalance { get; set; }
     }
 }
