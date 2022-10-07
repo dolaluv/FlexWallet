@@ -57,7 +57,7 @@ namespace FlexWallet.Data.Service
                         WalletAccountBalance = appSettings.DefaultFund,
                         WalletAccountOpeningBalance = appSettings.DefaultFund,
                         WalletAccountTotalSavedFunds = appSettings.DefaultFund,
-                        WalletAccountTotalWithdrawFunds = appSettings.DefaultFund,
+                        WalletAccountTotalWithdrawFunds = 0,
                         WalletUserId = CreateWalleUser.Entity.Id,
                         CreatedBy = ""
                     };

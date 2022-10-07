@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -41,7 +42,12 @@ namespace FlexWallet.Data.Service
             {
                 var CreateWalleUser = await _db.WalletFundTransactions.AddAsync(walletFundTransaction);
                 var result = await _db.SaveChangesAsync();
-                statusMessage.Status = true;
+                if(result > 0)
+                {
+                    await FundTransfer(walletFundTransaction.AccountmNumber, walletFundTransaction.TransactionAccount, walletFundTransaction.TransactionAmount);
+                   
+                }
+                statusMessage.Status = result > 0;
                 statusMessage.Message = result > 0 ? $"Fund Transfer to {walletFundTransaction.TransactionAccountName} was successful " : "Fund Transfer Failed";
 
             }
@@ -51,5 +57,21 @@ namespace FlexWallet.Data.Service
             }
             return statusMessage;
         }
+        private async Task FundTransfer(string DebitAccountNumber, string CreditAccountNumber, double Amount)
+        {
+            var DebitAccount = await GetWalletAccountBalance(DebitAccountNumber);
+            DebitAccount.WalletAccountBalance = DebitAccount.WalletAccountBalance - Amount;
+            DebitAccount.WalletAccountBalance = DebitAccount.WalletAccountTotalWithdrawFunds + Amount;
+            _db.WalletUserAccounts.Update(DebitAccount);
+
+            var AccounCreditted = await GetWalletAccountBalance(CreditAccountNumber);
+            AccounCreditted.WalletAccountBalance = AccounCreditted.WalletAccountBalance + Amount;
+            AccounCreditted.WalletAccountBalance = AccounCreditted.WalletAccountTotalSavedFunds + Amount;
+            _db.WalletUserAccounts.Update(AccounCreditted);
+
+           await _db.SaveChangesAsync();
+        }
+       
     }
 }
+ 

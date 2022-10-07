@@ -26,6 +26,18 @@ namespace FlexWallet.Data.Service
 
         public async Task<StatusMessage> FundTransfer(WalletFundTransferDto walletFundTransferDto)
         {
+            var getAccountBalance = await GetAccountBalance(walletFundTransferDto.AccountmNumber);
+
+            if(getAccountBalance.AccountBalance < walletFundTransferDto.TransactionAmount)
+            {
+
+
+                return new StatusMessage
+                {
+                    Status= false,
+                    Message = $"insufficient funds"
+                };
+            }
             var walletFundTransaction = _mapper.Map<WalletFundTransferDto, WalletFundTransaction>(walletFundTransferDto);
             return await this.walletTransactionDataService.WalletFundTransfer(walletFundTransaction);
         }

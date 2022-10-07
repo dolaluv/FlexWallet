@@ -10,9 +10,9 @@ namespace FlexWallet.API.Controllers
     [ApiController]
     public class FundTransactionController : Controller
     {
-        private readonly WalletTransactionService walletTransactionService;
+        private readonly IWalletTransactionService walletTransactionService;
 
-        public FundTransactionController(WalletTransactionService walletTransactionService)
+        public FundTransactionController(IWalletTransactionService walletTransactionService)
         {
             this.walletTransactionService = walletTransactionService ?? throw new ArgumentNullException(nameof(walletTransactionService));
         }
