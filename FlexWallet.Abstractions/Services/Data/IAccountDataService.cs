@@ -12,6 +12,6 @@ namespace FlexWallet.Abstractions.Services.Data
     public interface IAccountDataService
     {
         Task<StatusMessage> WalletRegistration(WalletUser walletUser);
-        Task<StatusMessage> WalletAuthenticateLoginUser(WalletUserLogin walletUserLogin);
+        Task<(StatusMessage, WalletUserAccount)> WalletAuthenticateLoginUser(WalletUserLogin walletUserLogin);
     }
 }

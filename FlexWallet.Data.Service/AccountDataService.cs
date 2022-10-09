@@ -4,6 +4,7 @@ using FlexWallet.Abstractions.Models;
 using FlexWallet.Abstractions.Models.Dtos;
 using FlexWallet.Abstractions.Services.Data;
 using FlexWallet.Data.Service.Data;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualBasic;
 using System;
 using System.Collections.Generic;
@@ -25,15 +26,20 @@ namespace FlexWallet.Data.Service
             this.appSettings = appSettings ?? throw new ArgumentNullException(nameof(appSettings));
         }
 
-        public async Task<StatusMessage> WalletAuthenticateLoginUser(WalletUserLogin walletUserLogin)
+        public async Task<(StatusMessage, WalletUserAccount)> WalletAuthenticateLoginUser(WalletUserLogin walletUserLogin)
         {
             try
             {
-                var exist = _db.WalletUsers.Any(f => f.Email == walletUserLogin.Email && f.Password == walletUserLogin.Password);
-                statusMessage.Status = exist;
-                statusMessage.Message = exist ? "User Login Successfully " : "Invalid Email/Password" ;
-
-                return statusMessage;
+                var UserExist = _db.WalletUsers.FirstOrDefault(f => f.Email == walletUserLogin.Email && f.Password == walletUserLogin.Password);
+                statusMessage.Status = UserExist != null;
+                statusMessage.Message = UserExist != null ? "User Login Successfully " : "Invalid Email/Password" ;
+                
+                    var GetWalletAccount = UserExist != null ? await _db.WalletUserAccounts
+                  .Include(u => u.walletUser)
+                  .Where(em => em.WalletUserId == UserExist.Id)
+                  .FirstOrDefaultAsync(): null;
+               
+                return (statusMessage, GetWalletAccount);
             }
             catch (Exception ex)
             {

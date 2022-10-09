@@ -14,11 +14,9 @@ namespace FlexWallet.Data.Mock
 {
     public class MockAccountDataService : IAccountDataService
     {
-        public Task<StatusMessage> WalletAuthenticateLoginUser(WalletUserLogin walletUserLogin)
+        public Task<(StatusMessage, WalletUserAccount)> WalletAuthenticateLoginUser(WalletUserLogin walletUserLogin)
         {
-            var results = ResourceHelper.GetObject<List<WalletUser>>("WalletUsers.json", Constants.MockDataNamespace);
-           var CheckUser = results.FirstOrDefault(f => f.Email == walletUserLogin.Email && f.Password == walletUserLogin.Password);
-            return Task.FromResult(new StatusMessage());
+            throw new NotImplementedException();
         }
 
         public Task<StatusMessage> WalletRegistration(WalletUser walletUser)
@@ -33,5 +31,7 @@ namespace FlexWallet.Data.Mock
                 throw new Exception($"Unable to load data {ex.Message}");
             }
         }
+
+        
     }
 }
