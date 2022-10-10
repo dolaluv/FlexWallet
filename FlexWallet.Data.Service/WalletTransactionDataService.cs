@@ -26,7 +26,8 @@ namespace FlexWallet.Data.Service
         {
             try
             {
-             return await  _db.WalletUserAccounts.FirstOrDefaultAsync(f => f.WalletAccountNumber == WallectAccountNumber);
+                
+                return await  _db.WalletUserAccounts.Include(u=> u.walletUser).FirstOrDefaultAsync(f => f.WalletAccountNumber == WallectAccountNumber);
 
             }
             catch(Exception ex)
