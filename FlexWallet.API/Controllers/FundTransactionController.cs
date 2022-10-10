@@ -2,12 +2,14 @@
 using FlexWallet.Abstractions.Services.Business;
 using FlexWallet.API.Helpers;
 using FlexWallet.Data.Service;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FlexWallet.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(AuthenticationSchemes = "Bearer")]
     public class FundTransactionController : Controller
     {
         private readonly IWalletTransactionService walletTransactionService;
@@ -47,8 +49,7 @@ namespace FlexWallet.API.Controllers
         }
 
 
-        [HttpGet("GetWallectAccountBalanceByAccountNumber")]
-        [ProducesResponseType(typeof(ResponseModel), 200)]
+        [HttpGet("GetWallectAccountBalanceByAccountNumber")] 
         public async Task<IActionResult> WallectAccountBalance( string wlletAccountNumber)
         {
             try
@@ -57,7 +58,7 @@ namespace FlexWallet.API.Controllers
                 {
                     var result = await this.walletTransactionService.GetAccountBalance(wlletAccountNumber);
                     if (result != null)
-                        return Ok(StandardResponse.Ok("Success", result));
+                        return Ok( result);
                     else
                         return BadRequest(StandardResponse.BadRequest("An error occured"));
                 }

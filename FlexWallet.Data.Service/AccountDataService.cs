@@ -30,7 +30,7 @@ namespace FlexWallet.Data.Service
         {
             try
             {
-                var UserExist = _db.WalletUsers.FirstOrDefault(f => f.Email == walletUserLogin.Email && f.Password == walletUserLogin.Password);
+                var UserExist = _db.WalletUsers.FirstOrDefault(f => f.Email.ToLower().Trim() == walletUserLogin.Email.ToLower().Trim() && f.Password.Trim() == walletUserLogin.Password.Trim());
                 statusMessage.Status = UserExist != null;
                 statusMessage.Message = UserExist != null ? "User Login Successfully " : "Invalid Email/Password" ;
                 
@@ -51,6 +51,14 @@ namespace FlexWallet.Data.Service
         {
             try
             {
+                var CheckIfMailExist = _db.WalletUsers.FirstOrDefault(f=> f.Email.ToLower().Trim() == walletUser.Email.ToLower().Trim());
+                if(CheckIfMailExist != null)
+                {
+
+                    statusMessage.Status = false;
+                    statusMessage.Message = $"A user with this mail {walletUser.Email} already exist";
+                    return statusMessage;
+                }
                var CreateWalleUser = await  _db.WalletUsers.AddAsync(walletUser);
                 var result = await _db.SaveChangesAsync();
                 if(result > 0)

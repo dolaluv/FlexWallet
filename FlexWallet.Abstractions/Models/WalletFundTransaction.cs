@@ -16,7 +16,7 @@ namespace FlexWallet.Abstractions.Models
         public string TransactionAccount { get; set; }
         public string TransactionAccountName { get; set; }
         public string TransactionBankName { get; set; }
-        public string TransactionStatus { get; set; }
+        public string TransactionStatus { get; set; } = "Pending";
         public string CreatedBy { get; set; }
         public DateTime TransactionDate { get; set; } = DateTime.Now;
         [ForeignKey("WalletUserAccount")]

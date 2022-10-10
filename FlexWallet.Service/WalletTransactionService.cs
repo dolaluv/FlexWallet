@@ -26,19 +26,37 @@ namespace FlexWallet.Data.Service
 
         public async Task<StatusMessage> FundTransfer(WalletFundTransferDto walletFundTransferDto)
         {
+            if (walletFundTransferDto.AccountmNumber == walletFundTransferDto.TransactionAccount)
+            {
+                return new StatusMessage
+                {
+                    Status = false,
+                    Message = $"Transfer to same Account Number {walletFundTransferDto.TransactionAccount} "
+                };
+            }
             var getAccountBalance = await GetAccountBalance(walletFundTransferDto.AccountmNumber);
+           
 
             if(getAccountBalance == null || getAccountBalance?.AccountBalance < walletFundTransferDto?.TransactionAmount )
-            {
-
-
+            { 
                 return new StatusMessage
                 {
                     Status= false,
-                    Message = getAccountBalance != null? $"insufficient funds" : "Un able to verify accoun Number"
+                    Message = getAccountBalance != null? $"insufficient funds" : "Unable to verify accoun Number"
+                };
+            }
+            var CheckIfFundAccountExist = await GetAccountBalance(walletFundTransferDto.TransactionAccount);
+            if (CheckIfFundAccountExist == null )
+            {
+                return new StatusMessage
+                {
+                    Status = false,
+                    Message = $"Unable to Very Account {walletFundTransferDto.TransactionAccount} "
                 };
             }
             var walletFundTransaction = _mapper.Map<WalletFundTransferDto, WalletFundTransaction>(walletFundTransferDto);
+            walletFundTransaction.WalletUserId = getAccountBalance.WalletUserId;
+            walletFundTransaction.WalletUserAccountId = getAccountBalance.WalletUserAccountId;
             return await this.walletTransactionDataService.WalletFundTransfer(walletFundTransaction);
         }
 
@@ -48,10 +66,12 @@ namespace FlexWallet.Data.Service
             if (walletAccount == null)
                 return null;
             return new WalletUserAccountDto
-            {
+            { 
                 AccountName =  $"{walletAccount?.walletUser?.FirstName}  {walletAccount?.walletUser?.FirstName}",
                 AccountNumber = WallectAccountNumber,
-                AccountBalance = walletAccount.WalletAccountBalance
+                AccountBalance = walletAccount.WalletAccountBalance,
+                WalletUserAccountId = walletAccount.Id,
+                WalletUserId = walletAccount.WalletUserId
 
             };
         }
